@@ -12,8 +12,14 @@
 
 ---
 
-GitHub Contribution Art is a web interface which can be used to create pixel art on the GitHub contribution grid 💪
+<div align="center"> 
+   
+   GitHub Contribution Art is a web interface which can be used to create pixel art on the GitHub contribution grid 💪
 
+   Try it live at https://github-art.com!
+
+</div>
+   
 ---
 
 ## Setup
@@ -43,6 +49,13 @@ If you found a bug, have an idea, or want to fix an issue please open an issue a
 - [LibGit2Sharp](https://github.com/libgit2/libgit2sharp) - Powerful git wrapper.
 - [Blazored LocalStorage](https://github.com/Blazored/LocalStorage) - Local storage APIs for Blazor applications.
 - [HtmlAgilityPack](https://github.com/zzzprojects/html-agility-pack) - An agile HTML parser.
+
+---
+
+## Support the project
+
+Running a website isn't free 😜 If you would like to support the project it is highly appreciated!
+Only Patreon is supported for now. You can find me here: https://www.patreon.com/bePatron?u=63309090
 
 ---
 
