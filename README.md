@@ -12,8 +12,14 @@
 
 ---
 
-GitHub Contribution Art is a web interface which can be used to create pixel art on the GitHub contribution grid 💪
+<div align="center"> 
+   
+   GitHub Contribution Art is a web interface which can be used to create pixel art on the GitHub contribution grid 💪
 
+   Try it live at https://github-art.com!
+
+</div>
+   
 ---
 
 ## Setup
