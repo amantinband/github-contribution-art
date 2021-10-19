@@ -13,7 +13,6 @@
 <div class="contribution-day"
      @onpointerover="ContributionDayHovered"
      @onmousedown="ColorDay"
-     @onclick="ColorDay"
      @ondblclick="@(() => Task.FromResult(false))"
      @ontouchend="@(() => Task.FromResult(false))"
      style="background: @ContributionLevelToColorMap[@ContributionGridState.Value.ContributionGrid[Day, Week]]">

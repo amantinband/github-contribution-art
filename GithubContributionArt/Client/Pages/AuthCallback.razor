@@ -20,7 +20,7 @@
 {
     <div class="loading-container">
         <p class="loading-text">
-            Look at you, you open source Picasso! Your art is being prepared and pushed to your GitHub (this may take a few minutes, depending on how many commits we are generating dynamically). Once done, you will be redirected to your GitHub page.
+            Look at you, you open source Picasso! Your art is being prepared and pushed to your GitHub (this may take up to 5 minutes, depending on how many commits we are generating dynamically). Once done, you will be redirected to your GitHub page.
         </p>
         <p class="loading-text">It may take a minute or two for GitHub to render the final contribution grid colors, so if the colors don't seem right, give it a try after a minute.</p>
         <div class="spinner"></div>
@@ -70,7 +70,6 @@ else
 
                 var submiteGithubArtResponse = JsonConvert.DeserializeObject<SubmiteGithubArtResponse>(await response.Content.ReadAsStringAsync());
 
-                await Task.Delay(3000);
                 NavManager.NavigateTo(submiteGithubArtResponse.UserGithubUrl.AbsoluteUri);
             }
         }
