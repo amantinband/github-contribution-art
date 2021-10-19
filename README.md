@@ -6,7 +6,7 @@
 
 ## Fill your contribution grid real estate with Pixel Art!
 
-[![GitHub contributors](https://img.shields.io/github/contributors/mantinband/amiko-dark)](https://GitHub.com/mantinband/amiko-dark/graphs/contributors/) [![GitHub Stars](https://img.shields.io/github/stars/mantinband/amiko-dark.svg)](https://github.com/mantinband/amiko-dark/stargazers) [![GitHub license](https://img.shields.io/github/license/mantinband/amiko-dark)](https://github.com/mantinband/amiko-dark/blob/main/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/mantinband/github-contribution-art)](https://GitHub.com/mantinband/amiko-dark/graphs/contributors/) [![GitHub Stars](https://img.shields.io/github/stars/mantinband/github-contribution-art.svg)](https://github.com/mantinband/github-contribution-art/stargazers) [![GitHub license](https://img.shields.io/github/license/mantinband/github-contribution-art)](https://github.com/mantinband/github-contribution-art/blob/main/LICENSE)
 
 </div>
 
