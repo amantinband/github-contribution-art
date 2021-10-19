@@ -1,0 +1,15 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+:root {
+    --text-fg-default: #24292F;
+    --text-fg-muted: #57606A;
+    --border-color: #D0D7DE;
+}
+html, body {
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    margin-bottom: 50px;
+}
+
+  * {
+      touch-action: manipulation;
+  }

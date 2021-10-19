@@ -1,0 +1,33 @@
+﻿.remove-painting-container {
+    margin-top: 0.2em;
+    display: block;
+    text-align: center;
+}
+
+    .remove-painting-container > h1 {
+        font-weight: 600;
+        font-size: 1em;
+    }
+
+    .remove-painting-container > .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .remove-painting-container > .buttons > .button {
+        margin: 5px;
+        border: none;
+        color: var(--text-fg-muted);
+        font-weight: 600;
+        font-size: 0.8em;
+        padding: 0.5em 1em;
+        background: #E5E5E5;
+        border-radius: 2em;
+        border: 3px solid rgb(0 0 0 / 0.00);
+        cursor: pointer;
+    }
+
+    .remove-painting-container > .buttons > .button-selected {
+        border: 3px solid var(--text-fg-muted);
+    }

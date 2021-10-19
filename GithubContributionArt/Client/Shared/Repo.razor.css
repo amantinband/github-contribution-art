@@ -1,0 +1,75 @@
+﻿.repo {
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+    .repo > .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .repo > .header > .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+            .repo > .header > .title > img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .repo > .header > .title > span {
+                padding-bottom: 0.1em;
+                text-align: left;
+                font-weight: 600;
+                margin-left: 0.5em;
+                font-size: 1em;
+                color: #0969DA;
+            }
+
+
+        .repo > .header > .step-container {
+            padding: 0 0.5em;
+            border: 1px solid #D0D7DE;
+            border-radius: 1em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-fg-muted);
+            font-weight: 500;
+        }
+
+    .repo > .repo-stats {
+        align-items: center;
+        width: 60px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .repo > .repo-stats > .language-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 1em;
+        }
+
+        .repo > .repo-stats > img {
+            width: 16px;
+            height: 16px;
+        }
+
+
+    .repo > .content {
+        padding: 0.4em;
+    }
+
+@media only screen and (min-width: 1100px) {
+    .repo {
+        max-width: 500px;
+    }
+}

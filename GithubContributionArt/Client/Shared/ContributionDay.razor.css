@@ -1,0 +1,23 @@
+﻿.contribution-day {
+    outline-offset: -1px;
+    border: 1px solid rgba(27, 31, 35, 0.06);
+    width: 11px;
+    height: 11px;
+    background: #EBEDF0;
+    margin: 2px;
+    border-radius: 2px;
+}
+
+@media only screen and (min-width: 870px) and (max-width: 1000px) {
+    .contribution-day {
+        width: 13px;
+        height: 13px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .contribution-day {
+        width: 15px;
+        height: 15px;
+    }
+}

@@ -1,0 +1,73 @@
+﻿@using Fluxor
+@using GithubContributionArt.Shared;
+@using GithubContributionArt.Client.Store.ContributionGridState
+@using GithubContributionArt.Client.Store.ContributionGridState.DayColored
+@using GithubContributionArt.Client.Store.ContributionGridState.GridCleared
+@using GithubContributionArt.Client.Store.ContributionGridState.FillWithRandom
+@using GithubContributionArt.Client.Store.ContributionLevelState
+
+@inject IState<ContributionGridState> ContributionGridState
+@inject IState<ContributionLevelState> ContributionLevelState
+@inject IDispatcher Dispatcher
+@inject IJSRuntime JsRuntime
+
+<div class="contribution-art">
+    <div class="contribution-grid">
+            @for (var week = 0; week < CalendarConstants.WeeksInYear - 1; week++)
+            {
+                <div class="week">
+                    @for (var day = 0; day < CalendarConstants.DaysInWeek; day++)
+                    {
+                        <ContributionDay Day="day" Week="week"></ContributionDay>
+                    }
+                </div>
+            }
+
+            <div class="week">
+                @for (var day = 0; day < (int)DateTime.Now.DayOfWeek + 1; day++)
+                {
+                    <ContributionDay Day="day" Week="CalendarConstants.WeeksInYear-1"></ContributionDay>
+                }
+            </div>
+
+    </div>
+    <div class="art-footer">
+        <div class="art-control">
+            <img @onclick="ClearGrid" src="/images/clear.svg" alt="Clear art" />
+            <img @onclick="FillGridWithRandom" src="/images/random.svg" alt="Fill with random data" />
+            <div @onclick="@(() => ContributionLevelChanged(ContributionLevel.L0))" class="contribution-color @(@ContributionLevelState.Value.ContributionLevel == ContributionLevel.L0 ? "l0 selected-color" : "l0")"></div>
+            <div @onclick="@(() => ContributionLevelChanged(ContributionLevel.L1))" class="contribution-color @(@ContributionLevelState.Value.ContributionLevel == ContributionLevel.L1 ? "l1 selected-color" : "l1")"></div>
+            <div @onclick="@(() => ContributionLevelChanged(ContributionLevel.L2))" class="contribution-color @(@ContributionLevelState.Value.ContributionLevel == ContributionLevel.L2 ? "l2 selected-color" : "l2")"></div>
+            <div @onclick="@(() => ContributionLevelChanged(ContributionLevel.L3))" class="contribution-color @(@ContributionLevelState.Value.ContributionLevel == ContributionLevel.L3 ? "l3 selected-color" : "l3")"></div>
+            <div @onclick="@(() => ContributionLevelChanged(ContributionLevel.L4))" class="contribution-color @(@ContributionLevelState.Value.ContributionLevel == ContributionLevel.L4 ? "l4 selected-color" : "l4")"></div>
+        </div>
+        <span class="color-disclaimer">
+            Note: Final shades may differ (<span @onclick="OpenColorDisclaimerInNewTabAsync">why?</span>)
+        </span>
+    </div>
+    <span class="flip-phone-text">
+        *Use desktop for best experience
+    </span>
+</div>
+
+@code {
+    private async Task OpenColorDisclaimerInNewTabAsync()
+    {
+        await JsRuntime.InvokeAsync<object>("open", "https://github.community/t/the-color-coding-of-contribution-graph-is-showing-wrong-information/18572/2", "_blank");
+    }
+
+    private void ClearGrid()
+    {
+        Dispatcher.Dispatch(new ContributionGridClearedAction());
+    }
+
+    private void FillGridWithRandom()
+    {
+        Dispatcher.Dispatch(new FillGridWithRandomContributionLevelsAction());
+    }
+
+    private void ContributionLevelChanged(ContributionLevel contributionLevel)
+    {
+        Dispatcher.Dispatch(new ContributionLevelChangedAction { NewContributionLevel = contributionLevel });
+    }
+}

@@ -1,0 +1,92 @@
+﻿.contribution-art {
+    margin: 0 auto;
+    padding: 1em;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    max-width: 1100px;
+}
+
+    .contribution-art > .contribution-grid {
+        display: flex;
+        overflow-x: auto;
+    }
+
+        .contribution-art > .contribution-grid > .week {
+            margin: 0 auto;
+        }
+
+    .contribution-art > .art-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .contribution-art > .art-footer > .art-control {
+            display: inline-flex;
+            padding: 0.5em;
+            align-items: center;
+        }
+
+            .contribution-art > .art-footer > .art-control > .clear {
+                background: #D42F2F;
+                border-radius: 1em;
+                width: 24px;
+                height: 24px;
+            }
+
+            .contribution-art > .art-footer > .art-control > div, img {
+                margin-right: 5px;
+            }
+
+            .contribution-art > .art-footer > .art-control > .contribution-color {
+                outline-offset: -1px;
+                width: 24px;
+                height: 24px;
+                border-radius: 1em;
+                border: 3px solid white;
+            }
+
+            .contribution-art > .art-footer > .art-control > .selected-color {
+                border: 3.5px solid black;
+            }
+
+            .contribution-art > .art-footer > .art-control > .l0 {
+                background: #EBEDF0;
+            }
+
+            .contribution-art > .art-footer > .art-control > .l1 {
+                background: #9BE9A8;
+            }
+
+            .contribution-art > .art-footer > .art-control > .l2 {
+                background: #40C463;
+            }
+
+            .contribution-art > .art-footer > .art-control > .l3 {
+                background: #30A14E;
+            }
+
+            .contribution-art > .art-footer > .art-control > .l4 {
+                background: #216E39;
+            }
+
+        .contribution-art > .art-footer > .color-disclaimer {
+            color: var(--text-fg-default);
+            font-size: 0.8em;
+        }
+
+            .contribution-art > .art-footer > .color-disclaimer > span {
+                color: #0969da;
+                cursor: pointer;
+            }
+
+    .contribution-art > .flip-phone-text {
+        color: red;
+        font-size: 0.8em;
+    }
+
+@media only screen and (min-width: 900px) {
+    .contribution-art > .flip-phone-text {
+        display: none;
+    }
+}

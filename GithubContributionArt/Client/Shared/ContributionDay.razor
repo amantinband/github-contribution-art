@@ -1,0 +1,55 @@
+﻿@using GithubContributionArt.Shared
+@using Fluxor
+@using GithubContributionArt.Client.Store.ContributionGridState.DayColored
+@using GithubContributionArt.Client.Store.ContributionGridState
+@using GithubContributionArt.Client.Store.ContributionLevelState
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@inject IState<ContributionGridState> ContributionGridState
+@inject IState<ContributionLevelState> ContributionLevelState
+@inject IDispatcher Dispatcher
+
+<div class="contribution-day"
+     @onpointerover="ContributionDayHovered"
+     @onmousedown="ColorDay"
+     @onclick="ColorDay"
+     @ondblclick="@(() => Task.FromResult(false))"
+     @ontouchend="@(() => Task.FromResult(false))"
+     style="background: @ContributionLevelToColorMap[@ContributionGridState.Value.ContributionGrid[Day, Week]]">
+</div>
+
+@code {
+    [Parameter]
+    public int Day { get; set; }
+
+    [Parameter]
+    public int Week { get; set; }
+
+    private static Dictionary<ContributionLevel, string> ContributionLevelToColorMap = new Dictionary<ContributionLevel, string>
+    {
+        [ContributionLevel.L0] = "#EBEDF0",
+        [ContributionLevel.L1] = "#9BE9A8",
+        [ContributionLevel.L2] = "#40C463",
+        [ContributionLevel.L3] = "#30A14E",
+        [ContributionLevel.L4] = "#216E39",
+    };
+
+    private void ContributionDayHovered(PointerEventArgs e)
+    {
+        if (e.Pressure != 0)
+        {
+            ColorDay();
+        }
+    }
+
+    private void ColorDay()
+    {
+        Dispatcher.Dispatch(new ContributionDayColoredAction
+        {
+            DayOfWeek = Day,
+            WeekOfYear = Week,
+            ContributionLevel = ContributionLevelState.Value.ContributionLevel
+        });
+    }
+}

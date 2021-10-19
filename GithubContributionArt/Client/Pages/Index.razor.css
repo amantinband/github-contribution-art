@@ -1,0 +1,108 @@
+﻿.user {
+    padding: 1.5em;
+}
+
+    .user > .user-container {
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+        .user > .user-container > .avatar {
+            display: inline-block;
+            width: 102px;
+            height: 102px;
+        }
+
+        .user > .user-container > .user-details {
+            margin-top: 0.5em;
+            margin-left: 1em;
+            display: inline-block;
+        }
+
+            .user > .user-container > .user-details > h1 {
+                margin-bottom: 0;
+                color: var(--text-fg-default);
+                font-weight: 500;
+                font-size: 1.7em;
+            }
+
+            .user > .user-container > .user-details > h2 {
+                color: var(--text-fg-muted);
+                font-weight: 300;
+                font-size: 1.2em;
+            }
+
+    .user > p {
+        margin: 1em 0 0 1em;
+        font-size: 1.2em;
+    }
+
+.instructions {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contribution-art {
+    display: block;
+    padding: 1em;
+}
+
+.submit-art {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+    .submit-art > .paint-button {
+        padding: 0.3em 1.2em;
+        color: white;
+        font-weight: 500;
+        font-size: 1.2em;
+        background: #0969DA;
+        border: none;
+        border-radius: 2em;
+        outline: none;
+    }
+
+        .submit-art > .paint-button:focus {
+            color: white;
+            background: var(--text-fg-muted);
+        }
+
+@media only screen and (min-width: 1100px) {
+
+    .top-section-container {
+        margin-top: 2em;
+        display: flex;
+        justify-content: center;
+    }
+
+        .top-section-container > .user {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .top-section-container > .user > p {
+                margin: 0 auto;
+            }
+
+            .top-section-container > .user > .user-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+                .top-section-container > .user > .user-container > .user-details {
+                    text-align: center;
+                }
+
+                .top-section-container > .user > .user-container > .avatar {
+                    width: 200px;
+                    height: 200px;
+                }
+
+        .top-section-container > .instructions {
+        }
+}

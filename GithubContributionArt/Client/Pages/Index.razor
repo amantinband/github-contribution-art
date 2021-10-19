@@ -1,0 +1,86 @@
+﻿@page "/"
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@using GithubContributionArt.Shared
+@using Blazored.LocalStorage
+@using Microsoft.Extensions.Configuration
+@using Fluxor
+@using GithubContributionArt.Client.Store.Github
+@using GithubContributionArt.Client.Store.ContributionGridState
+@using GithubContributionArt.Client.Store.ContributionGridState.SetGrid
+@using GithubContributionArt.Client.Store.RemoveArt
+@using Newtonsoft.Json
+
+@inject NavigationManager NavManager
+@inject IConfiguration Configuration
+@inject IState<GithubState> GithubState;
+@inject IState<ContributionGridState> ContributionGridState
+@inject IState<RemoveArtState> RemoveArtState
+@inject ILocalStorageService LocalStorage
+@inject IDispatcher Dispatcher
+
+<div class="top-section-container">
+    <section class="user">
+        <div class="user-container">
+            <img class="avatar" src="/images/avatar.svg" alt="Avatar" />
+            <div class="user-details">
+                <h1>GitHub Contribution Art</h1>
+                <h2>Be an open source ninja</h2>
+            </div>
+        </div>
+        <p>Be the open source contributer you never were! 🙌😎😜</p>
+    </section>
+
+    <section class="instructions">
+        <Repo Title="Color the contribution grid"
+              Step="1"
+              Content="Just like painting, while your mouse is down, any hovered contribution day will be painted with the selected color."
+              LanguageColorHex="#F34B7D"></Repo>
+
+        <Repo Title="Select when you want your art to disappear"
+              Step="2"
+              Content="You can choose if you want your art to disappear after few minutes.
+If you select never, you can always manually delete the repository."
+              LanguageColorHex="#3572A5"></Repo>
+
+        <Repo Title="Click “Paint!”"
+              Step="3"
+              Content="You will be redirected to the GitHub authentication page. After you sign in, we will create a fake repository “contribution-art” with a commit history to match your drawing."
+              LanguageColorHex="#F1E05A"></Repo>
+    </section>
+</div>
+
+<section class="contribution-art">
+    <ContributionArt></ContributionArt>
+</section>
+
+<section class="remove-art">
+    <RemoveArt></RemoveArt>
+</section>
+
+<section class="submit-art">
+    <button @onclick="SubmitArt" class="paint-button">Paint!</button>
+</section>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (await LocalStorage.ContainKeyAsync("contribution-grid-string"))
+        {
+            var contributionGrid = JsonConvert.DeserializeObject<ContributionLevel[,]>(await LocalStorage.GetItemAsync<string>("contribution-grid-string"));
+            Dispatcher.Dispatch(new SetGridAction { ContributionGrid = contributionGrid });
+        }
+    }
+
+    private async Task SubmitArt()
+    {
+        var clientId = Configuration["github-client-id"];
+        var scopes = Configuration["github-scopes"];
+
+        await LocalStorage.SetItemAsync<string>("contribution-grid-string", JsonConvert.SerializeObject(ContributionGridState.Value.ContributionGrid));
+        await LocalStorage.SetItemAsync<int?>("remove-art-minutes", RemoveArtState.Value.RemoveArtMinutes);
+
+        NavManager.NavigateTo($"https://github.com/login/oauth/authorize?client_id={clientId}&scope={scopes}&state={GithubState.Value.State}");
+    }
+}

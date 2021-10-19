@@ -1,0 +1,21 @@
+﻿@using Fluxor
+@using GithubContributionArt.Client.Store.RemoveArt
+
+@inject IState<RemoveArtState> RemoveArtState
+@inject IDispatcher Dispatcher
+
+<div class="remove-painting-container">
+    <h1>Remove art in</h1>
+    <div class="buttons">
+        <div @onclick="@(() => RemoveAtMinutesChanged(5))" class="@(@RemoveArtState.Value.RemoveArtMinutes == 5 ? "button button-selected" : "button")">5 Minutes</div>
+        <div @onclick="@(() => RemoveAtMinutesChanged(30))" class="@(@RemoveArtState.Value.RemoveArtMinutes == 30 ? "button button-selected" : "button")">30 Minutes</div>
+        <div @onclick="@(() => RemoveAtMinutesChanged(null))" class="@(@RemoveArtState.Value.RemoveArtMinutes is null ? "button button-selected" : "button")">Never</div>
+    </div>
+</div>
+
+@code {
+    private void RemoveAtMinutesChanged(short? numMinutes)
+    {
+        Dispatcher.Dispatch(new RemoveArtMinutesChangedAction { NumMinutes = numMinutes });
+    }
+}

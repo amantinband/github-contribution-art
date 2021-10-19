@@ -1,0 +1,88 @@
+﻿@page "/authcallback"
+
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+
+@using Blazored.LocalStorage
+@using Fluxor
+@using Newtonsoft.Json
+@using System.Text
+@using System.Threading
+@using GithubContributionArt.Shared
+@using GithubContributionArt.Client.Store.Github
+@using Microsoft.AspNetCore.WebUtilities
+
+@inject ILocalStorageService LocalStorage
+@inject IState<GithubState> GithubState;
+@inject NavigationManager NavManager
+@inject HttpClient Http
+
+@if (!isSuccessfulAuthCallback.HasValue || isSuccessfulAuthCallback.Value)
+{
+    <div class="loading-container">
+        <p class="loading-text">
+            Look at you, you open source Picasso! Your art is being prepared and pushed to your GitHub (this may take a few minutes, depending on how many commits we are generating dynamically). Once done, you will be redirected to your GitHub page.
+        </p>
+        <p class="loading-text">It may take a minute or two for GitHub to render the final contribution grid colors, so if the colors don't seem right, give it a try after a minute.</p>
+        <div class="spinner"></div>
+    </div>
+}
+else
+{
+    <div class="error-container">
+        <p>Yikes! An unexpected error has occurred, please try again.</p>
+        <button @onclick="GoHome">Go home</button>
+    </div>
+}
+
+
+@code {
+    private bool? isSuccessfulAuthCallback;
+
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        try
+        {
+            var parsedQuery = QueryHelpers.ParseQuery(NavManager.ToAbsoluteUri(NavManager.Uri).Query);
+            isSuccessfulAuthCallback = parsedQuery.TryGetValue("code", out var code) &&
+                parsedQuery.TryGetValue("state", out var state) && state.ToString().Contains("a46eb");
+
+
+            if (isSuccessfulAuthCallback.Value)
+            {
+                var contributionGrid = JsonConvert.DeserializeObject<ContributionLevel[,]>(await LocalStorage.GetItemAsync<string>("contribution-grid-string"));
+                var removeArtMinutes = await LocalStorage.GetItemAsync<int?>("remove-art-minutes");
+
+                var requestContent = new SubmitGithubArtRequest(
+                    ContributionGrid: contributionGrid,
+                    TemporaryUserCode: code,
+                    RemoveArtMinutes: removeArtMinutes);
+
+                var request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri("/github/art/submit", UriKind.Relative),
+                    Method = HttpMethod.Post,
+                    Content = new StringContent(JsonConvert.SerializeObject(requestContent), Encoding.UTF8, "application/json"),
+                };
+
+                var response = await Http.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                var submiteGithubArtResponse = JsonConvert.DeserializeObject<SubmiteGithubArtResponse>(await response.Content.ReadAsStringAsync());
+
+                await Task.Delay(3000);
+                NavManager.NavigateTo(submiteGithubArtResponse.UserGithubUrl.AbsoluteUri);
+            }
+        }
+        catch
+        {
+            isSuccessfulAuthCallback = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private void GoHome()
+    {
+        NavManager.NavigateTo("/");
+    }
+}

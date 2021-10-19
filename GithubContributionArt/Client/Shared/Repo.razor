@@ -1,0 +1,35 @@
+﻿<div class="repo">
+    <div class="header">
+        <div class="title">
+            <img src="/images/repo.svg" alt="Reposiotry icon" />
+            <span>@Title</span>
+
+        </div>
+        <div class="step-container">
+            Step @Step
+        </div>
+    </div>
+
+    <div class="content">
+        @Content
+    </div>
+    <div class="repo-stats">
+        <div class="language-circle" style="background: @LanguageColorHex"></div>
+        <img src="/images/star.svg" alt="Star icon" />
+        <img src="/images/fork.svg" alt="Fork icon" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Content { get; set; }
+
+    [Parameter]
+    public int Step { get; set; }
+
+    [Parameter]
+    public string LanguageColorHex { get; set; }
+}
