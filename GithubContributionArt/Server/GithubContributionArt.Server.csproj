@@ -27,4 +27,13 @@
     <ProjectReference Include="..\Shared\GithubContributionArt.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ArtRepos\icon.svg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ArtRepos\README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
