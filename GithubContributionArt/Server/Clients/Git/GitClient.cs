@@ -3,8 +3,6 @@ using LibGit2Sharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GithubContributionArt.Server.Clients.Git
 {
@@ -12,14 +10,24 @@ namespace GithubContributionArt.Server.Clients.Git
     {
         public Repository Init(string repoName, string originRepoName, User user)
         {
-            var repo = new Repository(Repository.Init($"./{repoName}"));
+            var repoRelaivePath = Path.Combine(@".\ArtRepos", repoName);
+            var repo = new Repository(Repository.Init(repoRelaivePath));
 
             repo.Network.Remotes.Update("origin", r => { r.Url = $"https://github.com/{user.Nickname}/{originRepoName}.git"; });
 
-            var fileName = "README.md";
-            File.WriteAllText(Path.Combine(repo.Info.WorkingDirectory, fileName), "Some text");
+            var filesToCopy = new List<string> { "icon.svg", "README.md" };
 
-            repo.Index.Add(fileName);
+            filesToCopy.ForEach(fileName =>
+            {
+                var sourceRelativePath = Path.Combine(@".\ArtRepos", fileName);
+                var destRelativePath = Path.Combine(repoRelaivePath, fileName);
+
+                File.Copy(sourceRelativePath, destRelativePath, overwrite: true);
+
+                repo.Index.Add(fileName);
+            });
+
+
             repo.Index.Write();
             return repo;
         }
@@ -27,7 +35,7 @@ namespace GithubContributionArt.Server.Clients.Git
         public void AddCommit(Repository repo, User user, DateTimeOffset date)
         {
             var author = new Signature(user.FullName, user.Email, date);
-            repo.Commit("Fake commit!", author, author, new CommitOptions { AllowEmptyCommit = true });
+            repo.Commit("Pixel", author, author, new CommitOptions { AllowEmptyCommit = true });
         }
         public void Push(Repository repo, User user, string token)
         {

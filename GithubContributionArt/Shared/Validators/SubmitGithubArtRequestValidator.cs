@@ -28,7 +28,8 @@ namespace GithubContributionArt.Shared.Validators
                 return true;
             });
 
-            RuleFor(x => x.RemoveArtMinutes).GreaterThan(0).LessThanOrEqualTo(30);
+            RuleFor(x => x.RemoveArtMinutes).Must(x => (x is null) || (x.Value > 0 && x.Value <= 30));
+
             RuleFor(x => x.TemporaryUserCode).NotEmpty().NotNull();
         }
     }

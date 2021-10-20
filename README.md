@@ -2,7 +2,7 @@
 
 <img src="GithubContributionArt\Client\wwwroot\images\avatar.svg" alt="drawing" width="300px"/>
 
-# GitHub Contribution Art
+# GitHub Contribution Art 🎨
 
 ## Fill your contribution grid real estate with Pixel Art!
 
@@ -13,13 +13,15 @@
 ---
 
 <div align="center"> 
-   
+
    GitHub Contribution Art is a web interface which can be used to create pixel art on the GitHub contribution grid 💪
 
-   Try it live at https://github-art.com!
+   Try it live at <https://github-art.com>!
 
 </div>
-   
+
+![Example](./assets/example.png)
+
 ---
 
 ## Setup
@@ -28,8 +30,8 @@
 2. Setup an OAuth application for testing locally:
    1. Settings -> Developer settings -> OAuth Apps -> New OAuth App
    2. Application name: whatever you wish
-   3. Homepage URL: https://localhost:44353/
-   4. Authorization callback URL: https://localhost:44353/authcallback
+   3. Homepage URL: <https://localhost:44353/>
+   4. Authorization callback URL: <https://localhost:44353/authcallback>
 3. Generate a Client secret:
    1. Settings -> Developer settings -> OAuth Apps -> your app -> Generate a new client secret.
    2. Copy this secret somewhere since it won't be available later.
@@ -55,7 +57,7 @@ If you found a bug, have an idea, or want to fix an issue please open an issue a
 ## Support the project
 
 Running a website isn't free 😜 If you would like to support the project it is highly appreciated!
-Only Patreon is supported for now. You can find me here: https://www.patreon.com/bePatron?u=63309090
+Only Patreon is supported for now. You can find me here: <https://www.patreon.com/bePatron?u=63309090>
 
 ---
 

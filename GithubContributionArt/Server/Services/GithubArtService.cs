@@ -30,44 +30,52 @@ namespace GithubContributionArt.Server.Services
 
             await this.githubClient.CreateRepoAsync(RepoConstants.RepoName, token);
 
-            var repo = this.gitClient.Init(repoName: $"ArtRepos/{user.Nickname}", originRepoName: RepoConstants.RepoName, user);
-
-            var multiplier = (int)(user.CurrentContributions.MaxDayContributions <= 8 ? 1 : Math.Ceiling(user.CurrentContributions.MaxDayContributions / 8.0));
-
-            Dictionary<ContributionLevel, int> contributionLevelToNumCommitsMap = new()
+            var repo = this.gitClient.Init(repoName: user.Nickname, originRepoName: RepoConstants.RepoName, user);
+            try
             {
-                [ContributionLevel.L0] = 0,
-                [ContributionLevel.L1] = 1,
-                [ContributionLevel.L2] = 2 * multiplier,
-                [ContributionLevel.L3] = 3 * multiplier,
-                [ContributionLevel.L4] = 4 * multiplier,
-            };
 
-            for (var day = 0; day < contributionGrid.GetLength(0); day++)
-            {
-                for (var week = 0; week < contributionGrid.GetLength(1); week++)
+                var multiplier = (int)(user.CurrentContributions.MaxDayContributions <= 8 ? 1 : Math.Ceiling(user.CurrentContributions.MaxDayContributions / 8.0));
+
+                Dictionary<ContributionLevel, int> contributionLevelToNumCommitsMap = new()
                 {
-                    var numCommits = contributionLevelToNumCommitsMap[contributionGrid[day, week]] - user.CurrentContributions.ContributionGrid[day, week];
+                    [ContributionLevel.L0] = 0,
+                    [ContributionLevel.L1] = 1,
+                    [ContributionLevel.L2] = 2 * multiplier,
+                    [ContributionLevel.L3] = 3 * multiplier,
+                    [ContributionLevel.L4] = 4 * multiplier,
+                };
 
-                    for (var i = 0; i < numCommits; i++)
+                for (var day = 0; day < contributionGrid.GetLength(0); day++)
+                {
+                    for (var week = 0; week < contributionGrid.GetLength(1); week++)
                     {
-                        this.gitClient.AddCommit(repo, user, user.CurrentContributions.FirstSundayInGrid.AddDays(day + week * 7));
+                        var numCommits = contributionLevelToNumCommitsMap[contributionGrid[day, week]] - user.CurrentContributions.ContributionGrid[day, week];
+
+                        for (var i = 0; i < numCommits; i++)
+                        {
+                            this.gitClient.AddCommit(repo, user, user.CurrentContributions.FirstSundayInGrid.AddDays(day + week * 7));
+                        }
                     }
                 }
-            }
 
-            this.gitClient.Push(repo, user, token);
+                this.gitClient.Push(repo, user, token);
 
-            if (removeArtMinutes.HasValue)
-            {
-                _ = Task.Run(async () =>
+                if (removeArtMinutes.HasValue)
                 {
-                    await Task.Delay((int)TimeSpan.FromMinutes(removeArtMinutes.Value).TotalMilliseconds);
-                    await this.githubClient.DeleteRepoAsync(user, RepoConstants.RepoName, token);
-                });
+                    _ = Task.Run(async () =>
+                    {
+                        await Task.Delay((int)TimeSpan.FromMinutes(removeArtMinutes.Value).TotalMilliseconds);
+                        await this.githubClient.DeleteRepoAsync(user, RepoConstants.RepoName, token);
+                    });
+                }
+                this.gitClient.DeleteRepo(repo);
+            }
+            catch
+            {
+                this.gitClient.DeleteRepo(repo);
+                throw;
             }
 
-            this.gitClient.DeleteRepo(repo);
         }
     }
 }
