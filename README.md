@@ -54,13 +54,6 @@ If you found a bug, have an idea, or want to fix an issue please open an issue a
 
 ---
 
-## Support the project
-
-Running a website isn't free 😜 If you would like to support the project it is highly appreciated!
-Only Patreon is supported for now. You can find me here: <https://www.patreon.com/bePatron?u=63309090>
-
----
-
 ## License
 
 This project is licensed under the terms of the [MIT](https://github.com/mantinband/github-contribution-art/blob/main/LICENSE) license.
